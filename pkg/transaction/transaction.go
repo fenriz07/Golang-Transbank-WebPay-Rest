@@ -1,10 +1,10 @@
 package transaction
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/client"
+	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/transaction/response"
 )
 
 const createTransactionEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions"
@@ -14,7 +14,7 @@ const getTransactionStatusEndpoint = "rswebpaytransaction/api/webpay/v1.0/transa
 const captureEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/$TOKEN$/capture"
 
 /*Create create transaction*/
-func Create(buyOrder string, sessionID string, amount int, returnURL string) (interface{}, error) {
+func Create(buyOrder string, sessionID string, amount int, returnURL string) (response.TransactionCreateResponse, error) {
 
 	body := map[string]interface{}{
 		"buy_order":  buyOrder,
@@ -31,7 +31,7 @@ func Create(buyOrder string, sessionID string, amount int, returnURL string) (in
 		log.Printf("Transaction fail in create method.  \n%v\n", err)
 	}
 
-	fmt.Println(resp)
+	transactionCreateResponse, err := response.GetTransactionCreateResponse(resp.Body())
 
-	return resp, err
+	return transactionCreateResponse, err
 }
