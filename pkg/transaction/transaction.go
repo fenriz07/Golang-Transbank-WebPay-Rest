@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/client"
@@ -29,6 +30,8 @@ func Create(buyOrder string, sessionID string, amount int, returnURL string) (in
 	if err != nil {
 		log.Printf("Transaction fail in create method.  \n%v\n", err)
 	}
+
+	fmt.Println(resp)
 
 	return resp, err
 }
