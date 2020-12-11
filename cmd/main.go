@@ -3,15 +3,16 @@ package main
 import (
 	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/client"
 	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/environment"
+	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/transaction"
 )
 
 func main() {
 
 	environmentIntegration := environment.IntegrationEnviroment{}
 
-	env := environment.GetInstance(environmentIntegration)
+	environment.SetInstance(environmentIntegration)
 
-	webPayClient := client.WebPayClient{Environment: env}
+	client.SetInstance()
 
-	webPayClient.Create("ordenCompra12345678", "sesion1234557545", 1000, "http://www.comercio.cl/webpay/retorno")
+	transaction.Create("ordenCompra12345678", "sesion1234557545", 1000, "http://www.comercio.cl/webpay/retorno")
 }

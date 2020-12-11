@@ -4,21 +4,25 @@ import (
 	"sync"
 )
 
-type environment struct {
+/*Environment struct content data for client*/
+type Environment struct {
 	Host         string
 	APIKeyID     string
 	APIKeySecret string
 }
 
-var e *environment
+var e *Environment
 var once sync.Once
 
-/*GetInstance Export Singleton*/
-func GetInstance(typeE typeEnvironment) *environment {
+/*SetInstance set env instnce singleton*/
+func SetInstance(env typeEnvironment) {
 
 	once.Do(func() {
-		e = typeE.getEnvironment()
+		e = env.getEnvironment()
 	})
+}
 
+/*GetInstance get env instance*/
+func GetInstance() *Environment {
 	return e
 }

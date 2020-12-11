@@ -7,8 +7,8 @@ type ProductionEnviroment struct {
 	APIKeySecret string
 }
 
-func (e ProductionEnviroment) getEnvironment() *environment {
-	return &environment{
+func (e ProductionEnviroment) getEnvironment() *Environment {
+	return &Environment{
 		Host:         e.Host,
 		APIKeyID:     e.APIKeyID,
 		APIKeySecret: e.APIKeySecret,
