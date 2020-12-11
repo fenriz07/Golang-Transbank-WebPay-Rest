@@ -9,6 +9,12 @@ type errorClient struct {
 	HTTPStatus   string
 }
 
+func (e *errorClient) SetProperties(HTTPCode int, HTTPStatus string) {
+	e.HTTPCode = HTTPCode
+	e.HTTPStatus = HTTPStatus
+	e.Message = fmt.Sprintf("Could not obtain a response from the service: %s (HTTP code %v)", HTTPStatus, HTTPCode)
+}
+
 func (e *errorClient) Error() string {
 	return fmt.Sprintf(" Message: %s\n HTTPCode: %d\n HTTPStatus: %s\n ErrorMessage: %s ", e.Message, e.HTTPCode, e.HTTPStatus, e.ErrorMessage)
 }

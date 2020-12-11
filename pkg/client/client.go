@@ -2,7 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"sync"
 
@@ -80,9 +79,7 @@ func (client HttpClient) validateResponse(resp *resty.Response) error {
 
 		var errClient errorClient
 
-		errClient.HTTPCode = httpCode
-		errClient.HTTPStatus = httpStatus
-		errClient.Message = fmt.Sprintf("Could not obtain a response from the service: %s (HTTP code %v)", httpStatus, httpCode)
+		errClient.SetProperties(httpCode, httpStatus)
 
 		err := json.Unmarshal(resp.Body(), &errClient)
 
