@@ -11,7 +11,7 @@ import (
 const createTransactionEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions"
 const commitTransactionEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions"
 const refundTransactionEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/$TOKEN$/refunds"
-const getTransactionStatusEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/%s/refunds"
+const getTransactionStatusEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/%s"
 const captureEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/$TOKEN$/capture"
 
 /*Create create transaction*/
@@ -54,7 +54,8 @@ func Commit(token string) (response.TransactionCommitResponse, error) {
 	return transactionCommitResponse, err
 }
 
-func getStatus(token string) {
+/*GetStatus return status for transaction*/
+func GetStatus(token string) {
 
 	httpClient := client.GetInstance()
 
