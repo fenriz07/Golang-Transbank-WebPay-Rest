@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/client"
@@ -34,4 +35,19 @@ func Create(buyOrder string, sessionID string, amount int, returnURL string) (re
 	transactionCreateResponse, err := response.GetTransactionCreateResponse(resp.Body())
 
 	return transactionCreateResponse, err
+}
+
+/*Commit check the status of a transaction*/
+func Commit(token string) {
+	httpClient := client.GetInstance()
+
+	endpoint := fmt.Sprintf("%s/%s", commitTransactionEndpoint, token)
+
+	resp, err := httpClient.Put(endpoint)
+
+	if err != nil {
+		log.Printf("Transaction fail in create method.  \n%v\n", err)
+	}
+
+	fmt.Println(resp)
 }

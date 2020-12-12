@@ -34,13 +34,11 @@ func GetInstance() *HttpClient {
 
 /*Post http post for client*/
 func (client HttpClient) Post(endpoint string, body map[string]interface{}) (*resty.Response, error) {
-	clientResty := resty.New()
+	clientResty := client.init()
 
 	url := client.generateURL(endpoint)
-	headers := client.getHeaders()
 
 	resp, err := clientResty.R().
-		SetHeaders(headers).
 		SetBody(body).
 		Post(url)
 
@@ -56,6 +54,37 @@ func (client HttpClient) Post(endpoint string, body map[string]interface{}) (*re
 	}
 
 	return resp, err
+}
+
+/*Put http put method for client*/
+func (client HttpClient) Put(endpoint string) (*resty.Response, error) {
+	clientResty := client.init()
+
+	url := client.generateURL(endpoint)
+
+	resp, err := clientResty.R().
+		Put(url)
+
+	if err != nil {
+		log.Printf("Resty fail in post method client :  %v\n", err)
+		return resp, err
+	}
+
+	err = client.validateResponse(resp)
+
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, err
+}
+
+func (client HttpClient) init() *resty.Client {
+	clientResty := resty.New()
+
+	headers := client.getHeaders()
+
+	return clientResty.SetHeaders(headers)
 }
 
 func (client HttpClient) getHeaders() map[string]string {
