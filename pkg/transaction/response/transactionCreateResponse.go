@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+/*TransactionCreateResponse struct with contain skeleton json to createResponse*/
 type TransactionCreateResponse struct {
 	Token string `json:"token"`
 	URL   string `json:"url"`

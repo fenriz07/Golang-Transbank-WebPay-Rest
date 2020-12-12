@@ -1,7 +1,6 @@
 package client
 
 import (
-	"encoding/json"
 	"log"
 	"sync"
 
@@ -79,45 +78,27 @@ func (client HttpClient) Put(endpoint string) (*resty.Response, error) {
 	return resp, err
 }
 
-func (client HttpClient) init() *resty.Client {
-	clientResty := resty.New()
+/*Get http het method for client*/
+func (client HttpClient) Get(endpoint string) (*resty.Response, error) {
 
-	headers := client.getHeaders()
+	clientResty := client.init()
 
-	return clientResty.SetHeaders(headers)
-}
+	url := client.generateURL(endpoint)
 
-func (client HttpClient) getHeaders() map[string]string {
-	return map[string]string{
-		"Tbk-Api-Key-Id":     client.Environment.APIKeyID,
-		"Tbk-Api-Key-Secret": client.Environment.APIKeySecret,
-		"Content-Type":       "application/json",
-	}
-}
+	resp, err := clientResty.R().
+		Get(url)
 
-func (client HttpClient) generateURL(endpoint string) string {
-	return client.Environment.Host + endpoint
-}
-
-func (client HttpClient) validateResponse(resp *resty.Response) error {
-
-	var httpCode int = resp.StatusCode()
-	var httpStatus string = resp.Status()
-
-	if httpCode != 200 && httpCode != 204 {
-
-		var errClient errorClient
-
-		errClient.SetProperties(httpCode, httpStatus)
-
-		err := json.Unmarshal(resp.Body(), &errClient)
-
-		if err != nil {
-			log.Printf("Error Unmarshal response server :  %v\n", err)
-		}
-
-		return &errClient
+	if err != nil {
+		log.Printf("Resty fail in get method client :  %v\n", err)
+		return resp, err
 	}
 
-	return nil
+	err = client.validateResponse(resp)
+
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, err
+
 }

@@ -11,7 +11,7 @@ import (
 const createTransactionEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions"
 const commitTransactionEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions"
 const refundTransactionEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/$TOKEN$/refunds"
-const getTransactionStatusEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/$TOKEN$/refunds"
+const getTransactionStatusEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/%s/refunds"
 const captureEndpoint = "rswebpaytransaction/api/webpay/v1.0/transactions/$TOKEN$/capture"
 
 /*Create create transaction*/
@@ -38,7 +38,7 @@ func Create(buyOrder string, sessionID string, amount int, returnURL string) (re
 }
 
 /*Commit check the status of a transaction*/
-func Commit(token string) {
+func Commit(token string) (response.TransactionCommitResponse, error) {
 	httpClient := client.GetInstance()
 
 	endpoint := fmt.Sprintf("%s/%s", commitTransactionEndpoint, token)
@@ -46,8 +46,26 @@ func Commit(token string) {
 	resp, err := httpClient.Put(endpoint)
 
 	if err != nil {
-		log.Printf("Transaction fail in create method.  \n%v\n", err)
+		log.Printf("Transaction fail in commit method.  \n%v\n", err)
+	}
+
+	transactionCommitResponse, err := response.GetTransactionCommitResponse(resp.Body())
+
+	return transactionCommitResponse, err
+}
+
+func getStatus(token string) {
+
+	httpClient := client.GetInstance()
+
+	endpoint := fmt.Sprintf(getTransactionStatusEndpoint, token)
+
+	resp, err := httpClient.Get(endpoint)
+
+	if err != nil {
+		log.Printf("Transaction fail in commit method.  \n%v\n", err)
 	}
 
 	fmt.Println(resp)
+
 }
