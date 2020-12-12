@@ -16,6 +16,8 @@ func main() {
 
 	//transaction, _ := transaction.Create("ordenCompra12345678", "sesion1234557545", 1000, "http://www.comercio.cl/webpay/retorno")
 
-	transaction.GetStatus("epa")
+	//transaction.GetStatus("epa")
+
+	transaction.Refund("token prueba", 20000)
 
 }
