@@ -1,5 +1,5 @@
 package environment
 
-type typeEnvironment interface {
+type TypeEnvironment interface {
 	getEnvironment() *Environment
 }

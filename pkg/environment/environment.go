@@ -15,7 +15,7 @@ var e *Environment
 var once sync.Once
 
 /*SetInstance set env instnce singleton*/
-func SetInstance(env typeEnvironment) {
+func SetInstance(env TypeEnvironment) {
 
 	once.Do(func() {
 		e = env.getEnvironment()

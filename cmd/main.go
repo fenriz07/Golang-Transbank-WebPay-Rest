@@ -1,23 +1,19 @@
 package main
 
 import (
-	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/client"
-	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/environment"
+	"fmt"
+
 	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/transaction"
+	"github.com/fenriz07/Golang-Transbank-WebPay-Rest/pkg/webpayplus"
 )
 
 func main() {
 
-	environmentIntegration := environment.IntegrationEnviroment{}
+	webpayplus.SetEnvironmentIntegration()
+	//webpayplus.SetEnvironmentProduction("a","b")
 
-	environment.SetInstance(environmentIntegration)
+	transaction, _ := transaction.Create("ordenCompra12345678", "sesion1234557545", 1000, "http://www.comercio.cl/webpay/retorno")
 
-	client.SetInstance()
-
-	//transaction, _ := transaction.Create("ordenCompra12345678", "sesion1234557545", 1000, "http://www.comercio.cl/webpay/retorno")
-
-	//transaction.GetStatus("epa")
-
-	transaction.Refund("token prueba", 20000)
+	fmt.Println(transaction)
 
 }

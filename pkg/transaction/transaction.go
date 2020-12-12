@@ -90,7 +90,7 @@ func Refund(token string, amount int) (response.TransactionRefundResponse, error
 	resp, err := httpClient.Post(endpoint, body)
 
 	if err != nil {
-		log.Printf("Transaction fail in commit method.  \n%v\n", err)
+		log.Printf("Transaction fail in refund method.  \n%v\n", err)
 	}
 
 	transactionRefundResponse, err := response.GetTransactionRefundResponse(resp.Body())
