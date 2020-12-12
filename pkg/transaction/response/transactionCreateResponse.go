@@ -18,7 +18,7 @@ func GetTransactionCreateResponse(response []byte) (TransactionCreateResponse, e
 	err := json.Unmarshal(response, &tcr)
 
 	if err != nil {
-		log.Printf("Error en GetTransactionCreateResponse  %v", err)
+		log.Printf("Error in GetTransactionCreateResponse  %v", err)
 
 		return tcr, err
 	}

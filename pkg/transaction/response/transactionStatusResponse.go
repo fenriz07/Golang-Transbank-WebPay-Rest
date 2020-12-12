@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-/*TransactionCommitResponse struct with contain skeleton json to commitResponse*/
-type TransactionCommitResponse struct {
+/*TransactionStatusResponse struct with contain skeleton json to statusResponse*/
+type TransactionStatusResponse struct {
 	Vci        string `json:"vci"`
 	Amount     int    `json:"amount"`
 	Status     string `json:"status"`
@@ -24,17 +24,17 @@ type TransactionCommitResponse struct {
 	InstallmentsNumber int       `json:"installments_number"`
 }
 
-/*GetTransactionCommitResponse fascade with return struct TransactionCommitResponse*/
-func GetTransactionCommitResponse(response []byte) (TransactionCommitResponse, error) {
-	var tcr TransactionCommitResponse
+/*GetTransactionStatusResponse fascade with return struct TransactionCommitResponse*/
+func GetTransactionStatusResponse(response []byte) (TransactionStatusResponse, error) {
+	var tsr TransactionStatusResponse
 
-	err := json.Unmarshal(response, &tcr)
+	err := json.Unmarshal(response, &tsr)
 
 	if err != nil {
-		log.Printf("Error in GetTransactionCommitResponse  %v", err)
+		log.Printf("Error in GetTransactionStatusResponse  %v", err)
 
-		return tcr, err
+		return tsr, err
 	}
 
-	return tcr, nil
+	return tsr, nil
 }
