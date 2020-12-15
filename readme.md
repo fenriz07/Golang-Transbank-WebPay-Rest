@@ -11,8 +11,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/fenriz07/Golang-Transbank-WebPay-Rest)](https://goreportcard.com/report/github.com/fenriz07/Golang-Transbank-WebPay-Rest)
 ![Test](https://github.com/fenriz07/Golang-Transbank-WebPay-Rest/workflows/Test/badge.svg)
 
-![Test](https://github.com/fenriz07/Golang-Transbank-WebPay-Rest/workflows/Test/badge.svg)
-
 </p>
 
 ## Caracteristicas
