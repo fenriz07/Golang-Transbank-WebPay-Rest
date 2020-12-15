@@ -26,7 +26,9 @@ go get github.com/fenriz07/Golang-Transbank-WebPay-Rest
 
 ## Uso
 
-#### Inicializar ambiente
+### Inicializar ambiente
+
+Hay 2 ambientes Integración y producción
 
 ```go
 //Importar el package webpayplus
@@ -35,7 +37,7 @@ import (
 )
 ```
 
-##### Desarrollo
+#### Integración
 
 ```go
 /*
@@ -47,7 +49,7 @@ import (
 webpayplus.SetEnvironmentIntegration()
 ```
 
-##### Producción
+#### Producción
 
 ```go
 /*
@@ -66,6 +68,125 @@ APIKeySecret := "Llave secreta"
 webpayplus.SetEnvironmentProduction(APIKeyID,APIKeySecret)
 ```
 
+### Crear una transacción Webpay Plus
+
+Para crear una transacción basta llamar al método `transaction.Create()`
+
+```go
+/* Se deben pasar los siguentes parametros
+  buyOrder = numero de la orden (string)
+  sessionID = session (string)
+  amount = monto a cobrar (int)
+  returnURL = url de retorno que devolvera webpay
+*/
+Create(buyOrder string, sessionID string, amount int, returnURL string)
+```
+
+El mismo retornara el siguente `struct` de respuesta:
+
+```go
+/*TransactionCreateResponse struct with contain skeleton json to createResponse*/
+type TransactionCreateResponse struct {
+	Token string `json:"token"`
+	URL   string `json:"url"`
+}
+```
+
+### Confirmar una transacción Webpay Plus
+
+Cuando el comercio retoma el control mediante return_url debes confirmar y obtener el resultado de una transacción usando el método `transaction.Commit()`
+
+```go
+/* Se deben pasar los siguentes parametros
+  token = token devuelto por transbank  (string)
+*/
+Commit(token string) (response.TransactionCommitResponse, error)
+```
+
+El mismo retornara el siguente `struct` de respuesta:
+
+```go
+/*TransactionCommitResponse struct with contain skeleton json to commitResponse*/
+type TransactionCommitResponse struct {
+	Vci        string `json:"vci"`
+	Amount     int    `json:"amount"`
+	Status     string `json:"status"`
+	BuyOrder   string `json:"buy_order"`
+	SessionID  string `json:"session_id"`
+	CardDetail struct {
+		CardNumber string `json:"card_number"`
+	} `json:"card_detail"`
+	AccountingDate     string    `json:"accounting_date"`
+	TransactionDate    time.Time `json:"transaction_date"`
+	AuthorizationCode  string    `json:"authorization_code"`
+	PaymentTypeCode    string    `json:"payment_type_code"`
+	ResponseCode       int       `json:"response_code"`
+	InstallmentsNumber int       `json:"installments_number"`
+}
+
+```
+
+### Obtener estado de una transacción Webpay Plus
+
+Esta operación permite obtener el estado de la transacción en cualquier momento. En condiciones normales es probable que no se requiera ejecutar, pero en caso de ocurrir un error inesperado permite conocer el estado y tomar las acciones que correspondan. `transaction.GetStatus()`
+
+```go
+/* Se deben pasar los siguentes parametros
+  token = token devuelto por transbank  (string)
+*/
+GetStatus(token string) (response.TransactionStatusResponse, error)
+```
+
+El mismo retornara el siguente `struct` de respuesta:
+
+```go
+/*TransactionCommitResponse struct with contain skeleton json to commitResponse*/
+type TransactionCommitResponse struct {
+	Vci        string `json:"vci"`
+	Amount     int    `json:"amount"`
+	Status     string `json:"status"`
+	BuyOrder   string `json:"buy_order"`
+	SessionID  string `json:"session_id"`
+	CardDetail struct {
+		CardNumber string `json:"card_number"`
+	} `json:"card_detail"`
+	AccountingDate     string    `json:"accounting_date"`
+	TransactionDate    time.Time `json:"transaction_date"`
+	AuthorizationCode  string    `json:"authorization_code"`
+	PaymentTypeCode    string    `json:"payment_type_code"`
+	ResponseCode       int       `json:"response_code"`
+	InstallmentsNumber int       `json:"installments_number"`
+}
+
+```
+
+### Reversar o Anular un pago Webpay Plus
+
+Este método permite a todo comercio habilitado, reembolsar o anular una transacción que fue generada en Webpay Plus. `transaction.Refund()`
+
+```go
+/* Se deben pasar los siguentes parametros
+  token = token devuelto por transbank  (string)
+  amount = monto a reembolsar o anular (int)
+*/
+func Refund(token string, amount int) (response.TransactionRefundResponse, error)
+```
+
+El mismo retornara el siguente `struct` de respuesta:
+
+```go
+/*TransactionRefundResponse struct with contain skeleton json to refundResponse*/
+type TransactionRefundResponse struct {
+	Type              string    `json:"type"`
+	AuthorizationCode string    `json:"authorization_code"`
+	AuthorizationDate time.Time `json:"authorization_date"`
+	NullifiedAmount   float64   `json:"nullified_amount"`
+	Balance           float64   `json:"balance"`
+	ResponseCode      int       `json:"response_code"`
+}
+
+```
+
 ## Creador
 
-[Servio Z.](https://github.com/fenriz07)
+[Fenriz07](https://github.com/fenriz07)
