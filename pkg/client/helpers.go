@@ -27,7 +27,7 @@ func (client HttpClient) generateURL(endpoint string) string {
 	return client.Environment.Host + endpoint
 }
 
-func (client HttpClient) validateResponse(resp *resty.Response) error {
+func validateResponse(resp *resty.Response) error {
 
 	var httpCode int = resp.StatusCode()
 	var httpStatus string = resp.Status()
