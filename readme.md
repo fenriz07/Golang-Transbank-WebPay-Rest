@@ -18,6 +18,11 @@
 - Consolidación de respuestas en structs.
 - Manejo de errores http.
 
+## Ejemplo de uso (Gorilla):
+
+Ejemplo de proyecto donde esta implementado
+https://github.com/fenriz07/EjemploTransbankGoRest
+
 ## Instalación
 
 ```bash
