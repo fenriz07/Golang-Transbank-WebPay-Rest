@@ -25,5 +25,5 @@ func SetEnvironmentProduction(APIKeyID string, APIKeySecret string) {
 func setInstanceAndClient(env environment.TypeEnvironment) {
 
 	environment.SetInstance(env)
-	client.SetInstance("webpay")
+	client.SetInstance("http")
 }
