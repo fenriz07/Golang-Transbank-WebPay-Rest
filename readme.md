@@ -10,11 +10,11 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/fenriz07/Golang-Transbank-WebPay-Rest)](https://goreportcard.com/report/github.com/fenriz07/Golang-Transbank-WebPay-Rest)
 ![Test](https://github.com/fenriz07/Golang-Transbank-WebPay-Rest/workflows/Test/badge.svg)
-<a href="https://pkg.go.dev/github.com/fenriz07/Golang-Transbank-WebPay-Rest"><img src="https://godoc.org/github.com/fenriz07/Golang-Transbank-WebPay-Rest?status.svg" alt="GoDoc"></a> 
+<a href="https://pkg.go.dev/github.com/fenriz07/Golang-Transbank-WebPay-Rest"><img src="https://godoc.org/github.com/fenriz07/Golang-Transbank-WebPay-Rest?status.svg" alt="GoDoc"></a>
 
 </p>
 
-## Caracteristicas
+## Características
 
 - Soporte para ambiente de integración y producción
 - Crear transacción.
